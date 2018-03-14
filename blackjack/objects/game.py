@@ -32,23 +32,29 @@ class Game:
         return self.update_next_player_index()
 
     def play_card(self):
-        if self.deck.has_cards():
-            new_card = self.deck.get_card()
-            player_to_deal = self.players[self.next_player_index]
+        """
+        Play a card to next player who's turn it is to receive a card
+        After the card is dealt it is checked if the game is done
+        There are three ways the game can be done:
+            - There are no more cards in the deck
+            - One player has lost
+            - There are no more players who wants more cards
+        :return:
+        """
+        new_card = self.deck.get_card()
+        player_to_deal = self.players[self.next_player_index]
 
-            player_to_deal.deal_card(new_card)
-            score_to_beat = self.get_score_to_beat(player_to_deal)
-            play = player_to_deal.get_play(score_to_beat)
+        player_to_deal.deal_card(new_card)
+        score_to_beat = self.get_score_to_beat(player_to_deal)
+        play = player_to_deal.get_play(score_to_beat)
 
-            if play == 'LOSS':
-                return self.evaluate(game_is_done=True)
-            elif play == 'STOP':
-                # New player starts getting dealt cards
-                return self.update_next_player_index()
-            else:
-                return "IN_PROGRESS"
-        else:
+        if play == 'LOSS' or not self.deck.has_cards():
             return self.evaluate(game_is_done=True)
+        elif play == 'STOP':
+            # Next player in line to get dealt a card is updated
+            return self.update_next_player_index()
+        else:
+            return "IN_PROGRESS"
 
     def get_score_to_beat(self, player):
         """
@@ -90,30 +96,24 @@ class Game:
             elif player.get_hand_value() > 21:
                 losers += [player.name]
 
+        sam = self.players[self.players_index['sam']]
+        dealer = self.players[self.players_index['dealer']]
+
         if len(blackjacks) == 2:
-            print('sam')
-            print('sam: %s' % str(self.players[self.players_index['sam']].hand))
-            print('dealer: %s' % str(self.players[self.players_index['dealer']].hand))
+            self.print_final_state(sam, dealer)
             return "DONE"
         elif len(blackjacks) == 1:
             winner = blackjacks[0]
-            losers = [p.name for p in self.players if p.name != winner]
-            print(winner)
-            print('%s: %s' % (winner, str(self.players[self.players_index[winner]].hand)))
-            for loser in losers:
-                print('%s: %s' % (loser, str(self.players[self.players_index[loser]].hand)))
+            loser = [p.name for p in self.players if p.name != winner][0]
+            self.print_final_state(winner, loser)
             return "DONE"
         elif len(losers) == 2:
-            print('dealer')
-            print('dealer: %s' % str(self.players[self.players_index['dealer']].hand))
-            print('sam: %s' % str(self.players[self.players_index['sam']].hand))
+            self.print_final_state(dealer, sam)
             return "DONE"
         elif len(losers) == 1:
             winner = [p.name for p in self.players if p.name not in losers][0]
-            print(winner)
-            print('%s: %s' % (winner, str(self.players[self.players_index[winner]].hand)))
-            for loser in losers:
-                print('%s: %s' % (loser, str(self.players[self.players_index[loser]].hand)))
+            loser = losers[0]
+            self.print_final_state(winner, loser)
             return "DONE"
         elif game_is_done:
             # We already know that neither player has a card value of >= 21
@@ -133,15 +133,23 @@ class Game:
                 print('dealer: %s' % str(self.players[self.players_index['dealer']].hand))
             else:
                 winner = winner[0]
-                print(winner)
-                print('%s: %s' % (winner, str(self.players[self.players_index[winner]].hand)))
-                losers = [p.name for p in self.players if p.name != winner]
-                for loser in losers:
-                    print('%s: %s' % (loser, str(self.players[self.players_index[loser]].hand)))
+                loser = [p.name for p in self.players if p.name != winner][0]
+                self.print_final_state(winner, loser)
 
             return "DONE"
         else:
             return "IN_PROGRESS"
+
+    def print_final_state(self, winner, loser):
+        """
+        print to std out final state of game
+        :param winner: player object of winner of the game
+        :param loser: player object of loser of the game
+        :return: None
+        """
+        print(winner.name)
+        print('%s: %s' % (winner.name, str(winner.hand)))
+        print('%s: %s' % (loser.name, str(loser.hand)))
 
 
 
