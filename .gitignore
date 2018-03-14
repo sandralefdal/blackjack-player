@@ -1,0 +1,9 @@
+# Intellij
+.idea/
+.DS_Store
+
+# Cached
+__pycache__
+
+# Virtuealenvironmen
+venv/
