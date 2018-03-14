@@ -17,9 +17,9 @@ python --version
 
 ### Installing
 
-This module requires no additional libraries to run
+This module requires no additional libraries to run.
 
-You can now run the player with a random deck by running the command
+To play with a random dec, from the directory blackjack-player, run:
 
 ```buildoutcfg
 python blackjack/play.py
@@ -32,8 +32,8 @@ python blackjack/play.py {file_path}
 ```
 
 where \
-file_path: reference to file, \
-and deck file contains one line of data where each card is comma separated, in the following format:
+file_path is the reference to the deck file. \
+Deck file contains one line of data where each card is comma separated, in the following format:
 ```commandline
 CA, D4, H7, SJ,..., S5, S9, D10
 ```
