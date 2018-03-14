@@ -19,13 +19,21 @@ python --version
 
 This module requires no additional libraries to run.
 
-To play with a random dec, from the directory blackjack-player, run:
+Clone or download the repo to where you want to run it from.
+
+Then run:
+
+```commandline
+cd blackjack-player/
+```
+
+To play with a random deck, run:
 
 ```buildoutcfg
 python blackjack/play.py
 ```
 
-If you have a deck you want to use, you can run
+If you have a deck you want to use, you can run:
 
 ```buildoutcfg
 python blackjack/play.py {file_path}

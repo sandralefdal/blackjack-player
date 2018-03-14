@@ -7,27 +7,26 @@ class Deck:
         Deck consists of a list of cards
         """
         self.deck = []
-        self.VALID_SUITS = ['C', 'D', 'H', 'S']
-        self.VALID_RANKS = [str(i) for i in range(2, 11)] + ['J', 'Q', 'K', 'A']
 
     def read_from_file(self, filename):
         """
         Read deck from file
         :param filename: path and name of file
-        :return: None
+        :return: 1 if deck was succeccfully created, 0 if not
         """
         try:
             f = open(filename, 'r')
             deck = f.readline().split(",")
             for card in deck:
+                card = card.strip()
                 if len(card) != 0:
-                    suit = card[0]
-                    rank = card[1:]
-                    if suit in self.VALID_SUITS and rank in self.VALID_RANKS:
-                        self.deck += [Card(card)]
-                    else:
+                    try:
+                        c = Card(card)
+                    except ValueError:
                         print('Deck contains invalid cards. Exiting game.')
                         return 0
+                    self.deck += [c]
+
             f.close()
             return 1
         except FileNotFoundError:
@@ -38,12 +37,22 @@ class Deck:
             return 0
 
     def create_random_deck(self):
-        random_deck = get_random_deck()
-        for card in random_deck:
-            self.deck += [Card(card)]
-        return 1
+        """
+        Creates a full stack of cards "randomly" shuffled.
+        :return: 1 if deck was succesfully created, 0 if not
+        """
+        try:
+            random_deck = get_random_deck()
+            for card in random_deck:
+                self.deck += [Card(card)]
+            return 1
+        except:
+            return 0
 
     def has_cards(self):
+        """
+        :return: True if there are cards left in the deck, False otherwise
+        """
         return len(self.deck) > 0
 
     def get_card(self):
