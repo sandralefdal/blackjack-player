@@ -1,7 +1,9 @@
 """
 Testing for the game.
 """
+import sys
 
+sys.path.append('.')
 from blackjack.play import play_game
 
 print("Running tests...")

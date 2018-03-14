@@ -3,6 +3,7 @@ Implementation of game of Poker between two players, Sam and Dealer.
 """
 import sys
 
+sys.path.append('.')
 from blackjack.objects.player import Player
 from blackjack.objects.deck import Deck
 from blackjack.objects.game import Game
@@ -39,7 +40,6 @@ if __name__ == '__main__':
     """
     Run from command line with one optional argument: filepath to deck
     """
-    sys.argv = ["", "deck/deck"]
 
     deckfile = None
     if len(sys.argv) > 1:
