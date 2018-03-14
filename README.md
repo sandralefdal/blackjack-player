@@ -63,6 +63,7 @@ Edge cases:
 * Broken file path
 * Deck containing less than 4 cards
 * Deck containing invalid cards 
+* Both players start with blackjack
 
 Regular cases:
 

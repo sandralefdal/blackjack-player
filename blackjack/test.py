@@ -21,27 +21,30 @@ print()
 
 # Invalid cards in deck provided
 print("TEST: Deck containing invalid cards. Should exit game.")
-play_game("deck/invalid_deck")
+play_game("blackjack/deck/invalid_deck")
 print()
 
 # Empty deck
 print("TEST: Empty file given as deck. No cards should be dealt, and game finish with no winners.")
-play_game("deck/empty_deck")
+play_game("blackjack/deck/empty_deck")
 print()
 
 # Deck containing one card
 print("TEST: Deck given contains one card. Card should be dealt to sam, and sam should be winner of the game.")
-play_game("deck/one_card")
+play_game("blackjack/deck/one_card")
+print()
+
+# Both start with blackjack
+print("TEST: Example from assignment, both players start with blackjack. Sam should win.")
+play_game("blackjack/deck/both_initial_blackjack")
 print()
 
 # Provided example deck
 print("TEST: Example given in assignment. Sam should win.")
-play_game("deck/deck_test")
+play_game("blackjack/deck/deck_test")
 print()
 
 for i in range(10):
     print("TEST: Playing with random deck")
     play_game()
     print()
-
-

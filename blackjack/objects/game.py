@@ -92,9 +92,9 @@ class Game:
         losers = []
         for player in self.players:
             if player.get_hand_value() == 21:
-                blackjacks += [player.name]
+                blackjacks += [player]
             elif player.get_hand_value() > 21:
-                losers += [player.name]
+                losers += [player]
 
         sam = self.players[self.players_index['sam']]
         dealer = self.players[self.players_index['dealer']]
@@ -104,14 +104,14 @@ class Game:
             return "DONE"
         elif len(blackjacks) == 1:
             winner = blackjacks[0]
-            loser = [p.name for p in self.players if p.name != winner][0]
+            loser = [p for p in self.players if p.name != winner.name][0]
             self.print_final_state(winner, loser)
             return "DONE"
         elif len(losers) == 2:
             self.print_final_state(dealer, sam)
             return "DONE"
         elif len(losers) == 1:
-            winner = [p.name for p in self.players if p.name not in losers][0]
+            winner = [p for p in self.players if p.name not in losers[0].name][0]
             loser = losers[0]
             self.print_final_state(winner, loser)
             return "DONE"
@@ -123,9 +123,9 @@ class Game:
                 score = player.get_hand_value()
                 if score > max_score:
                     max_score = score
-                    winner = [player.name]
+                    winner = [player]
                 elif score == max_score:
-                    winner += [player.name]
+                    winner += [player]
 
             if len(winner) == 2:
                 print("It's a tie!")
@@ -133,7 +133,7 @@ class Game:
                 print('dealer: %s' % str(self.players[self.players_index['dealer']].hand))
             else:
                 winner = winner[0]
-                loser = [p.name for p in self.players if p.name != winner][0]
+                loser = [p for p in self.players if p.name != winner.name][0]
                 self.print_final_state(winner, loser)
 
             return "DONE"
