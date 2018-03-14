@@ -12,7 +12,6 @@ class Game:
         for i in range(len(players)):
             self.players_index[players[i].name] = i
 
-        self.game_state = 'IN_PROGRESS'
         self.next_player_index = 0
 
     def initialise(self):
